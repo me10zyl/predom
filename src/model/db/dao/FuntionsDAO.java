@@ -3,8 +3,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 import model.domain.Bean;
+import model.domain.FunctionsBean;
 import model.domain.UserBean;
-import model.domain.UserGroupBean;
 
 /**
  * 用户DataAcessObject
@@ -12,7 +12,7 @@ import model.domain.UserGroupBean;
  * @author ZyL
  * 
  */
-public class UserGroupDAO extends DAO
+public class FuntionsDAO extends DAO
 {
 	/**
 	 * @param record
@@ -23,11 +23,12 @@ public class UserGroupDAO extends DAO
 	{
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
-		sql = "insert into userGroup(userGroup_name) values(?)";
+		sql = "insert into functions(function_name,function_note) values(?,?)";
 		ps = getPrepareStatement(sql);
 		// 参数绑定
-		UserGroupBean userGroupBean = (UserGroupBean) record;
-		ps.setString(1, userGroupBean.getUserGroupName());
+		FunctionsBean functionsBean = (FunctionsBean) record;
+		ps.setString(1, functionsBean.getFunction_name());
+		ps.setString(2, functionsBean.getFunction_note());
 		// 执行SQL语句
 		int res = ps.executeUpdate();
 		if (res == 1)
@@ -48,19 +49,20 @@ public class UserGroupDAO extends DAO
 	public Bean assemble(ResultSet rs) throws SQLException
 	{
 		Vector<String> record = new Vector<String>();
-		record.add(rs.getInt("userGroup_id") + "");
-		record.add(rs.getString("userGroup_name") + "");
-		UserGroupBean userGroupBean = new UserGroupBean(Integer.parseInt(record.get(0)), record.get(1));
-		return userGroupBean;
+		record.add(rs.getInt("function_id") + "");
+		record.add(rs.getString("function_name"));
+		record.add(rs.getString("function_note"));
+		FunctionsBean functionsBean = new FunctionsBean(Integer.parseInt(record.get(0)),record.get(1),record.get(2));
+		return functionsBean;
 	}
 	@Override
 	public void deleteById(int id) throws ClassNotFoundException, SQLException
 	{
-		sql = "delete from userGroup where userGroup_id=?";
-		ps = getPrepareStatement(sql);
-		ps.setInt(1,id);
-		int res = ps.executeUpdate();
-		if (res == 1)
+		sql = "delete  from functions where function_id=?";
+		ps  = getPrepareStatement(sql);
+		ps.setInt(1, id);
+		int res =  ps.executeUpdate();
+		if(res == 1)
 		{
 			System.out.println("删除成功");
 		}
@@ -69,7 +71,7 @@ public class UserGroupDAO extends DAO
 	public Vector<Bean> getAll() throws ClassNotFoundException, SQLException
 	{
 		// TODO Auto-generated method stub
-		sql = "select * from userGroup";
+		sql = "select * from functions";
 		ps = getPrepareStatement(sql);
 		// 执行SQL语句
 		rs = ps.executeQuery();
@@ -84,33 +86,11 @@ public class UserGroupDAO extends DAO
 		release();
 		return records;
 	}
-	public Vector<Bean> getUserBeansByUserGroupId(int userGroupId) throws SQLException, ClassNotFoundException
-	{
-		// TODO Auto-generated method stub
-		sql = "select * from users where userGroup_id=?";
-		ps = getPrepareStatement(sql);
-		// 参数绑定
-		ps.setInt(1, userGroupId);
-		// 执行SQL语句
-		rs = ps.executeQuery();
-		// 处理查询结果
-		Bean bean = null;
-		// 一个Vector就是一条记录
-		Vector<Bean> userBeans= new Vector<Bean>();
-		UserDAO userDAO = new UserDAO();
-		while (rs.next())
-		{
-			bean = userDAO.assemble(rs);
-			userBeans.add(bean);
-		}
-		release();
-		return userBeans;
-	}
 	@Override
 	public Bean getById(int id) throws ClassNotFoundException, SQLException
 	{
 		// TODO Auto-generated method stub
-		sql = "select * from userGroup where userGroup_id=?";
+		sql = "select * from functions where function_id=?";
 		ps = getPrepareStatement(sql);
 		// 参数绑定
 		ps.setInt(1, id);
@@ -130,11 +110,12 @@ public class UserGroupDAO extends DAO
 	public void modifyById(int id, Bean record) throws ClassNotFoundException, SQLException
 	{
 		// TODO Auto-generated method stub
-		sql = "update userGroup set userGroup_name=? where userGroup_id=?";
+		sql = "update functions set function_name=?,function_note=? where function_id=?";
 		ps = getPrepareStatement(sql);
-		UserGroupBean userGroupBean = (UserGroupBean) record;
-		ps.setString(1, userGroupBean.getUserGroupName());
-		ps.setInt(2, id);
+		FunctionsBean functionsBean = (FunctionsBean) record;
+		ps.setString(1, functionsBean.getFunction_name());
+		ps.setString(2, functionsBean.getFunction_note());
+		ps.setInt(3, id);
 		int res = ps.executeUpdate();
 		if (res == 1)
 		{

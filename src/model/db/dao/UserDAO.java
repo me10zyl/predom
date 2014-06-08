@@ -127,7 +127,7 @@ public class UserDAO extends DAO
 		ps.setString(3, userBean.getUserAddress());
 		ps.setString(4, userBean.getUserCode());
 		ps.setString(5, userBean.getUserPhone());
-		ps.setString(6, userBean.getUserPhone());
+		ps.setString(6, userBean.getUserEmail());
 		ps.setString(7, userBean.getUserPassword());
 		ps.setInt(8, id);
 		int res = ps.executeUpdate();

@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -138,6 +139,8 @@ public class Permission extends JFrame implements ActionListener {
 		 * 32767));
 		 */
 
+		//setResizable(false);
+		this.setSize(new Dimension(800,600));
 		this.setLocationRelativeTo(getOwner());
 		pack();
 	}

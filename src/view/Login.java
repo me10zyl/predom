@@ -121,6 +121,7 @@ public class Login extends JFrame implements ActionListener {
 
 		this.setTitle("userManager¡ª¡ªLogin");
 		this.setLocationRelativeTo(getOwner());
+		this.setResizable(false);
 		pack();
 		this.setVisible(true);
 	}
