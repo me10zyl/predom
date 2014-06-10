@@ -68,10 +68,10 @@ public class UserDAO extends DAO
 	public void deleteById(int id) throws ClassNotFoundException, SQLException
 	{
 		sql = "delete  from users where user_id=?";
-		ps  = getPrepareStatement(sql);
+		ps = getPrepareStatement(sql);
 		ps.setInt(1, id);
-		int res =  ps.executeUpdate();
-		if(res == 1)
+		int res = ps.executeUpdate();
+		if (res == 1)
 		{
 			System.out.println("删除成功");
 		}
@@ -111,6 +111,25 @@ public class UserDAO extends DAO
 		if (rs.next())
 		{
 			bean = assemble(rs);
+		}
+		release();
+		return bean;
+	}
+	public UserBean getUserBeanByEmail(String email) throws SQLException, ClassNotFoundException
+	{
+		// TODO Auto-generated method stub
+		sql = "select * from users where user_email=?";
+		ps = getPrepareStatement(sql);
+		// 参数绑定
+		ps.setString(1, email);
+		// 执行SQL语句
+		rs = ps.executeQuery();
+		// 处理查询结果
+		UserBean bean = null;
+		// 一个Vector就是一条记录
+		if (rs.next())
+		{
+			bean = (UserBean) assemble(rs);
 		}
 		release();
 		return bean;

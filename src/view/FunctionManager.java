@@ -20,10 +20,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import exception.CannotUseException;
 import model.TableModel;
 import model.db.dao.FuntionsDAO;
 import model.domain.FunctionsBean;
 import util.BeanUtil;
+import util.PredomManager;
 
 public class FunctionManager extends JPanel
 {
@@ -64,13 +66,6 @@ public class FunctionManager extends JPanel
 	}
 	private void initComponents() throws SQLException, ClassNotFoundException
 	{
-		/*
-		 * Vector records = CreatTableRecordUtil
-		 * .createFunctionTableRecords
-		 * (this.functionDAO.getAllFunction()); this.tableModel = new
-		 * TableModel(this.columnNames, this.columnTypes, this.canEdit,
-		 * records);
-		 */
 		this.jLabel_logo = new JLabel();
 		this.jScrollPane_functionp = new JScrollPane();
 		this.jTable_function = new JTable();
@@ -103,22 +98,27 @@ public class FunctionManager extends JPanel
 		 * sorter.setComparator(0, new IntegerComparator());
 		 * this.functionTable.setRowSorter(sorter);
 		 */
-//		this.jTable_function.setPreferredSize(new Dimension(600, 400));
 		this.jTable_function.addMouseListener(new MouseAdapter()
 		{
 			public void mouseClicked(MouseEvent evt)
 			{
-//				try {
-//					PredomManager.canUse(evt);
-//					FunctionManager.this.functionTableMouseClicked(evt);
-//				} catch (SQLException e) {
-//					e.printStackTrace();
-//				} catch (ClassNotFoundException e) {
-//					e.printStackTrace();
-//				} catch (CanNotUseException e) {
-//					e.printStackTrace();
-//				}
-				FunctionManager.this.functionTableMouseClicked(evt);
+				try
+				{
+					PredomManager.canUse(evt);
+					FunctionManager.this.functionTableMouseClicked(evt);
+				} catch (ClassNotFoundException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SQLException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (CannotUseException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		this.jScrollPane_functionp.setViewportView(this.jTable_function);
@@ -163,18 +163,9 @@ public class FunctionManager extends JPanel
 		{
 			public void actionPerformed(ActionEvent evt)
 			{
-				/*
-				 * try { PredomManager.canUse(evt);
-				 * FunctionManager
-				 * .this.addButtonActionPerformed(evt); } catch
-				 * (SQLException e) { e.printStackTrace(); }
-				 * catch (ClassNotFoundException e) {
-				 * e.printStackTrace(); } catch
-				 * (CanNotUseException e) { e.printStackTrace();
-				 * }
-				 */
 				try
 				{
+					PredomManager.canUse(evt);
 					FunctionManager.this.addButtonActionPerformed(evt);
 					JOptionPane.showMessageDialog(null, "添加成功");
 				} catch (SQLException e)
@@ -187,6 +178,10 @@ public class FunctionManager extends JPanel
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, e.getMessage());
+				} catch (CannotUseException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				} finally
 				{
 					try
@@ -215,18 +210,9 @@ public class FunctionManager extends JPanel
 		{
 			public void actionPerformed(ActionEvent evt)
 			{
-				/*
-				 * try { PredomManager.canUse(evt);
-				 * FunctionManager
-				 * .this.deleteButtonActionPerformed(evt); }
-				 * catch (SQLException e) { e.printStackTrace();
-				 * } catch (ClassNotFoundException e) {
-				 * e.printStackTrace(); } catch
-				 * (CanNotUseException e) { e.printStackTrace();
-				 * }
-				 */
 				try
 				{
+					PredomManager.canUse(evt);
 					FunctionManager.this.deleteButtonActionPerformed(evt);
 				} catch (SQLException e)
 				{
@@ -235,6 +221,10 @@ public class FunctionManager extends JPanel
 				} catch (ClassNotFoundException e)
 				{
 					JOptionPane.showMessageDialog(null, e.getMessage());
+					e.printStackTrace();
+				} catch (CannotUseException e)
+				{
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} finally
 				{
@@ -262,18 +252,9 @@ public class FunctionManager extends JPanel
 		{
 			public void actionPerformed(ActionEvent evt)
 			{
-				/*
-				 * try { PredomManager.canUse(evt);
-				 * FunctionManager
-				 * .this.modifyButtonActionPerformed(evt); }
-				 * catch (SQLException e) { e.printStackTrace();
-				 * } catch (ClassNotFoundException e) {
-				 * e.printStackTrace(); } catch
-				 * (CanNotUseException e) { e.printStackTrace();
-				 * }
-				 */
 				try
 				{
+					PredomManager.canUse(evt);
 					FunctionManager.this.modifyButtonActionPerformed(evt);
 					JOptionPane.showMessageDialog(null, "修改成功");
 				} catch (SQLException e)
@@ -286,6 +267,10 @@ public class FunctionManager extends JPanel
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, e.getMessage());
+				} catch (CannotUseException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				} finally
 				{
 					try
@@ -357,14 +342,6 @@ public class FunctionManager extends JPanel
 	}
 	private void modifyButtonActionPerformed(ActionEvent evt) throws SQLException, ClassNotFoundException
 	{
-		// Function f = new Function();
-		/*
-		 * f.setFunction_ID(Integer.parseInt(this.idField.getText()));
-		 * f.setFunction_name(this.nameField.getText());
-		 * f.setFunction_note(this.noteField.getText());
-		 * 
-		 * this.functionDAO.updateFunction(f);
-		 */
 		FunctionsBean functionsBean = new FunctionsBean();
 		functionsBean.setFunction_name(jTextField_name.getText());
 		functionsBean.setFunction_note(jTextField_note.getText());

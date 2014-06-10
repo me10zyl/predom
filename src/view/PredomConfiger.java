@@ -19,7 +19,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableRowSorter;
+import exception.CannotUseException;
 import util.BeanUtil;
+import util.PredomManager;
 import model.TableModel;
 import model.db.dao.PredomDAO;
 import model.db.dao.UserGroupDAO;
@@ -104,6 +106,7 @@ public class PredomConfiger extends JPanel
 			{
 				try
 				{
+					PredomManager.canUse(e);
 					PredomConfiger.this.userGroupTableMouseClicked(e);
 				} catch (NumberFormatException e1)
 				{
@@ -120,6 +123,10 @@ public class PredomConfiger extends JPanel
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, e1.getMessage());
+				} catch (CannotUseException e1)
+				{
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -173,6 +180,7 @@ public class PredomConfiger extends JPanel
 			{
 				try
 				{
+					PredomManager.canUse(e);
 					PredomConfiger.this.configPredomActionPerformed(e);
 				} catch (NumberFormatException e1)
 				{
@@ -189,6 +197,10 @@ public class PredomConfiger extends JPanel
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, e1.getMessage());
+				} catch (CannotUseException e1)
+				{
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 		});

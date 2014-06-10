@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import exception.CannotUseException;
 import model.TableModel;
 import model.db.dao.UserDAO;
 import model.db.dao.UserGroupDAO;
@@ -27,6 +28,7 @@ import model.domain.Bean;
 import model.domain.UserBean;
 import model.domain.UserGroupBean;
 import util.BeanUtil;
+import util.PredomManager;
 
 public class UserGroupManager extends JPanel
 {
@@ -137,18 +139,9 @@ public class UserGroupManager extends JPanel
 		{
 			public void mouseClicked(MouseEvent evt)
 			{
-				/*
-				 * try { PredomManager.canUse(evt);
-				 * UserGroupManager
-				 * .this.userGroupTableMouseClicked(evt); }
-				 * catch (SQLException e) { e.printStackTrace();
-				 * } catch (ClassNotFoundException e) {
-				 * e.printStackTrace(); } catch
-				 * (CanNotUseException e) { e.printStackTrace();
-				 * }
-				 */
 				try
 				{
+					PredomManager.canUse(evt);
 					UserGroupManager.this.userGroupTableMouseClicked(evt);
 				} catch (SQLException e)
 				{
@@ -160,6 +153,10 @@ public class UserGroupManager extends JPanel
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, e.getMessage());
+				} catch (CannotUseException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				} finally
 				{
 					try
@@ -217,18 +214,9 @@ public class UserGroupManager extends JPanel
 		{
 			public void actionPerformed(ActionEvent evt)
 			{
-				/*
-				 * try { PredomManager.canUse(evt);
-				 * UserGroupManager
-				 * .this.addButtonActionPerformed(evt); } catch
-				 * (SQLException e) { e.printStackTrace(); }
-				 * catch (ClassNotFoundException e) {
-				 * e.printStackTrace(); } catch
-				 * (CanNotUseException e) { e.printStackTrace();
-				 * }
-				 */
 				try
 				{
+					PredomManager.canUse(evt);
 					UserGroupManager.this.addButtonActionPerformed(evt);
 					JOptionPane.showMessageDialog(null, "添加成功");
 				} catch (SQLException e)
@@ -241,6 +229,10 @@ public class UserGroupManager extends JPanel
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, e.getMessage());
+				} catch (CannotUseException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				} finally
 				{
 					try
@@ -269,18 +261,9 @@ public class UserGroupManager extends JPanel
 		{
 			public void actionPerformed(ActionEvent evt)
 			{
-				/*
-				 * try { PredomManager.canUse(evt);
-				 * UserGroupManager
-				 * .this.deleteButtonActionPerformed(evt); }
-				 * catch (SQLException e) { e.printStackTrace();
-				 * } catch (ClassNotFoundException e) {
-				 * e.printStackTrace(); } catch
-				 * (CanNotUseException e) { e.printStackTrace();
-				 * }
-				 */
 				try
 				{
+					PredomManager.canUse(evt);
 					UserGroupManager.this.deleteButtonActionPerformed(evt);
 				} catch (SQLException e)
 				{
@@ -292,6 +275,10 @@ public class UserGroupManager extends JPanel
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, e.getMessage());
+				} catch (CannotUseException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				} finally
 				{
 					try
@@ -319,18 +306,9 @@ public class UserGroupManager extends JPanel
 		{
 			public void actionPerformed(ActionEvent evt)
 			{
-				/*
-				 * try { PredomManager.canUse(evt);
-				 * UserGroupManager
-				 * .this.modifyButtonActionPerformed(evt); }
-				 * catch (SQLException e) { e.printStackTrace();
-				 * } catch (ClassNotFoundException e) {
-				 * e.printStackTrace(); } catch
-				 * (CanNotUseException e) { e.printStackTrace();
-				 * }
-				 */
 				try
 				{
+					PredomManager.canUse(evt);
 					UserGroupManager.this.modifyButtonActionPerformed(evt);
 					JOptionPane.showMessageDialog(null, "修改成功");
 				} catch (SQLException e)
@@ -343,6 +321,10 @@ public class UserGroupManager extends JPanel
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, e.getMessage());
+				} catch (CannotUseException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				} finally
 				{
 					try

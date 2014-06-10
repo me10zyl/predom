@@ -15,6 +15,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -22,6 +23,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import exception.CannotUseException;
 import model.TableModel;
 import model.db.dao.UserDAO;
 import model.db.dao.UserGroupDAO;
@@ -29,6 +31,8 @@ import model.domain.Bean;
 import model.domain.UserBean;
 import model.domain.UserGroupBean;
 import util.BeanUtil;
+import util.PredomManager;
+import verifier.EmailVerifier;
 
 public class UserManager extends JPanel
 {
@@ -137,18 +141,23 @@ public class UserManager extends JPanel
 		{
 			public void mouseClicked(MouseEvent evt)
 			{
-				/*
-				 * try { PredomManager.canUse(evt);
-				 * UserManager.this.userTableMouseClicked(evt);
-				 * } catch (SQLException e) {
-				 * e.printStackTrace(); } catch
-				 * (ClassNotFoundException e) {
-				 * e.printStackTrace(); } catch
-				 * (CanNotUseException e) { e.printStackTrace();
-				 * }
-				 */
-				// TODO
-				UserManager.this.userTableMouseClicked(evt);
+				try
+				{
+					PredomManager.canUse(evt);
+					UserManager.this.userTableMouseClicked(evt);
+				} catch (ClassNotFoundException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SQLException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (CannotUseException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		this.jScrollPane_users.setViewportView(this.jTable_user);
@@ -173,8 +182,7 @@ public class UserManager extends JPanel
 		gridBagConstraints.gridy = 1;
 		this.jPanel_userInfo.add(this.jTextField_name, gridBagConstraints);
 		this.jTextField_eMail.setPreferredSize(new Dimension(180, 20));
-		// this.eMailField.setInputVerifier(new
-		// IsNotChinese("eMail中不能有中文！"));
+		jTextField_eMail.setInputVerifier(new EmailVerifier());
 		gridBagConstraints = new GridBagConstraints();
 		gridBagConstraints.gridx = 2;
 		gridBagConstraints.gridy = 4;
@@ -228,19 +236,11 @@ public class UserManager extends JPanel
 		{
 			public void actionPerformed(ActionEvent evt)
 			{
-				/*
-				 * try { PredomManager.canUse(evt);
-				 * UserManager.this
-				 * .addButtonActionPerformed(evt); } catch
-				 * (SQLException e) { e.printStackTrace(); }
-				 * catch (ClassNotFoundException e) {
-				 * e.printStackTrace(); } catch
-				 * (CanNotUseException e) { e.printStackTrace();
-				 * }
-				 */
 				try
 				{
+					PredomManager.canUse(evt);
 					UserManager.this.addButtonActionPerformed(evt);
+					System.out.println(((JComponent)evt.getSource()).getName());
 					JOptionPane.showMessageDialog(null, "添加成功");
 				} catch (SQLException e)
 				{
@@ -252,6 +252,10 @@ public class UserManager extends JPanel
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, e.getMessage());
+				} catch (CannotUseException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				} finally
 				{
 					try
@@ -279,20 +283,9 @@ public class UserManager extends JPanel
 		{
 			public void actionPerformed(ActionEvent evt)
 			{
-				/*
-				 * try { PredomManager.canUse(evt);
-				 * UserManager.this
-				 * .deleteButtonActionPerformed(evt); } catch
-				 * (NumberFormatException e) {
-				 * e.printStackTrace(); } catch (SQLException e)
-				 * { e.printStackTrace(); } catch
-				 * (ClassNotFoundException e) {
-				 * e.printStackTrace(); } catch
-				 * (CanNotUseException e) { e.printStackTrace();
-				 * }
-				 */
 				try
 				{
+					PredomManager.canUse(evt);
 					UserManager.this .deleteButtonActionPerformed(evt);
 				} catch (NumberFormatException e)
 				{
@@ -308,6 +301,10 @@ public class UserManager extends JPanel
 				{
 					// TODO Auto-generated catch block
 					JOptionPane.showMessageDialog(null, e.getMessage());
+					e.printStackTrace();
+				} catch (CannotUseException e)
+				{
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}finally{
 					try
@@ -334,18 +331,9 @@ public class UserManager extends JPanel
 		{
 			public void actionPerformed(ActionEvent evt)
 			{
-//			*try {
-//					PredomManager.canUse(evt);
-//					UserManager.this.modifyButtonActionPerformed(evt);
-//				} catch (SQLException e) {
-//					e.printStackTrace();
-//				} catch (ClassNotFoundException e) {
-//					e.printStackTrace();
-//				} catch (CanNotUseException e) {
-//					e.printStackTrace();
-//				}
 				try
 				{
+					PredomManager.canUse(evt);
 					UserManager.this.modifyButtonActionPerformed(evt);
 					JOptionPane.showMessageDialog(null, "修改成功");
 				} catch (SQLException e)
@@ -358,6 +346,10 @@ public class UserManager extends JPanel
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, e.getMessage());
+				} catch (CannotUseException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				} finally
 				{
 					try
