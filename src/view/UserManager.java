@@ -68,7 +68,7 @@ public class UserManager extends JPanel
 	public UserManager()
 	{
 		this.columnNames = new String[]
-		{ "编号", "用户组","姓名", "地址", "邮编", "电话", "eMail","密码" };
+		{ "编号", "用户组", "姓名", "地址", "邮编", "电话", "eMail", "密码" };
 		this.canEdit = new boolean[8];
 		this.userTableModel = null;
 		this.userDAO = new UserDAO();
@@ -240,7 +240,7 @@ public class UserManager extends JPanel
 				{
 					PredomManager.canUse(evt);
 					UserManager.this.addButtonActionPerformed(evt);
-					System.out.println(((JComponent)evt.getSource()).getName());
+					System.out.println(((JComponent) evt.getSource()).getName());
 					JOptionPane.showMessageDialog(null, "添加成功");
 				} catch (SQLException e)
 				{
@@ -286,7 +286,7 @@ public class UserManager extends JPanel
 				try
 				{
 					PredomManager.canUse(evt);
-					UserManager.this .deleteButtonActionPerformed(evt);
+					UserManager.this.deleteButtonActionPerformed(evt);
 				} catch (NumberFormatException e)
 				{
 					// TODO Auto-generated catch block
@@ -306,13 +306,15 @@ public class UserManager extends JPanel
 				{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}finally{
+				} finally
+				{
 					try
 					{
 						userDAO.release();
 					} catch (SQLException e)
 					{
-						// TODO Auto-generated catch block
+						// TODO Auto-generated catch
+						// block
 						JOptionPane.showMessageDialog(null, e.getMessage());
 						e.printStackTrace();
 					}
@@ -408,14 +410,13 @@ public class UserManager extends JPanel
 		gridBagConstraints.insets = new Insets(5, 5, 5, 5);
 		this.jPanel_userInfo.add(this.jTextField_phone, gridBagConstraints);
 		UserGroupDAO userGroupDAO = new UserGroupDAO();
-		Vector<Bean> userGroups = userGroupDAO.getAll();
-		Vector<Integer> userGroupIds = new Vector<Integer>();
-		for (Bean bean : userGroups)
+		Vector<Bean> userGroupBeans = userGroupDAO.getAll();
+		Vector<UserGroupBean> userGroupBeans2 = new Vector<UserGroupBean>();
+		for (Bean bean : userGroupBeans)
 		{
-			UserGroupBean userGroupBean = (UserGroupBean) bean;
-			userGroupIds.add(userGroupBean.getUserGroupId());
+			userGroupBeans2.add((UserGroupBean) bean);
 		}
-		this.jComboBox_userGroup = new JComboBox(userGroupIds);
+		this.jComboBox_userGroup = new JComboBox(userGroupBeans2);
 		this.jComboBox_userGroup.setFont(new Font("宋体", 0, 9));
 		gridBagConstraints = new GridBagConstraints();
 		gridBagConstraints.gridx = 2;
@@ -429,7 +430,7 @@ public class UserManager extends JPanel
 		gridBagConstraints.anchor = 11;
 		add(this.jPanel_userInfo, gridBagConstraints);
 	}
-	private void userTableMouseClicked(MouseEvent evt)
+	private void userTableMouseClicked(MouseEvent evt) throws NumberFormatException, ClassNotFoundException, SQLException
 	{
 		int rowIndex = this.jTable_user.convertRowIndexToModel(this.jTable_user.getSelectedRow());
 		Vector record = this.userTableModel.getRow(rowIndex);
@@ -441,8 +442,13 @@ public class UserManager extends JPanel
 		this.jTextField_eMail.setText((String) record.elementAt(6));
 		this.jPasswordField_password.setText((String) record.elementAt(7));
 		String userGroup_idStr = (String) record.elementAt(1);
-		this.jComboBox_userGroup.setSelectedItem(Integer.parseInt(userGroup_idStr));
-		 
+		for (int i = 0; i < this.jComboBox_userGroup.getItemCount(); i++)
+		{
+			UserGroupBean userGroup = (UserGroupBean) this.jComboBox_userGroup.getItemAt(i);
+			if (userGroup.getUserGroupId() != Integer.parseInt(userGroup_idStr))
+				continue;
+			this.jComboBox_userGroup.setSelectedIndex(i);
+		}
 	}
 	private void modifyButtonActionPerformed(ActionEvent evt) throws SQLException, ClassNotFoundException
 	{
@@ -453,7 +459,7 @@ public class UserManager extends JPanel
 		user.setUserEmail(this.jTextField_eMail.getText());
 		user.setUserPassword(new String(this.jPasswordField_password.getPassword()));
 		user.setUserPhone(this.jTextField_phone.getText());
-		user.setUserGroupId(((Integer) (this.jComboBox_userGroup.getSelectedItem())).intValue());
+		user.setUserGroupId(((UserGroupBean)(jComboBox_userGroup.getSelectedItem())).getUserGroupId());
 		userDAO.modifyById(Integer.parseInt(jTextField_id.getText()), user);
 		showTableDatas();
 	}
@@ -466,7 +472,7 @@ public class UserManager extends JPanel
 			Vector record = this.userTableModel.getRow(this.jTable_user.convertRowIndexToModel(selectedRows[i]));
 			ids[i] = Integer.parseInt((String) record.elementAt(0));
 		}
-		for(int id : ids)
+		for (int id : ids)
 		{
 			userDAO.deleteById(id);
 		}

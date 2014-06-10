@@ -115,6 +115,13 @@ public class UserDAO extends DAO
 		release();
 		return bean;
 	}
+	/**
+	 * 通过Email获得用户Bean
+	 * @param email
+	 * @return
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public UserBean getUserBeanByEmail(String email) throws SQLException, ClassNotFoundException
 	{
 		// TODO Auto-generated method stub

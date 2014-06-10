@@ -42,6 +42,7 @@ public class PredomManager
 				break;
 			}
 		}
+//		canUse = true;
 		if (!canUse)
 		{
 			CannotUseException cannotUseException = new CannotUseException();

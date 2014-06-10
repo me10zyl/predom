@@ -34,4 +34,10 @@ public class UserGroupBean implements Bean
 	{
 		this.userGroupName = userGroupName;
 	}
+	@Override
+	public String toString()
+	{
+		return userGroupName;
+	}
+	
 }
