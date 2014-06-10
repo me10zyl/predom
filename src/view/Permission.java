@@ -130,7 +130,6 @@ public class Permission extends JFrame implements ActionListener
 		// setResizable(false);
 		this.setSize(new Dimension(800, 600));
 		this.setLocationRelativeTo(getOwner());
-		pack();
 	}
 	private void exitMenuItemActionPerformed(ActionEvent evt)
 	{
